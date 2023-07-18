@@ -1,7 +1,3 @@
----
-title: "ripe: use R in a pipeline"
-...
-
 `ripe` lets you use the statistical programming language R in a unix pipleine.
 
 # Examples
@@ -27,8 +23,7 @@ Grab data from a webpage or document and drop it into R.
 $ xclip -o -sel c | ripe
 ```
 
-One of `ripe`'s forebears is `vipe`, which lets you insert an interactive text
-editor into a pipe. ripe and vipe go well together:
+One of `ripe`'s forebears is [`vipe`](https://github.com/madx/moreutils/tree/master), which lets you insert an interactive text editor into a pipe. ripe and vipe go well together:
 
 ```
 $ xclip -o -sel c | vipe | ripe
@@ -73,8 +68,7 @@ DESCRIPTION:
 
 # Configuration
 
-`ripe is a python script. It depends on the `docopt` module for parsing
-command-line options.
+`ripe` is a python script. It depends on the `docopt` module for parsing command-line options.
 
-`ripe` controls R using a custom Rprofile file. This R code is saved as a string in `ripe` and can be modified there. At runtime, ripe saves the string to a second tempfile, and instructs R to use it as an Rprofile by setting `R_PROFILE` in the user's environment.
+`ripe` controls R using a custom Rprofile file. This R code is stored as a string in `ripe` and can be modified there. At runtime, ripe saves the string to a second tempfile, and instructs R to use it as an Rprofile by setting `R_PROFILE` in the user's environment.
 
