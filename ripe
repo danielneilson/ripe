@@ -84,7 +84,7 @@ sys.stdin.close()
 os.environ["ripe_tmpfn"] = tmpfp.name
 
 noninteractive=False
-if args['EXPR'] is not None: 
+if args['EXPR'] is not None:
     noninteractive = True
     if pipein:
         expr = "i %>% " + args['EXPR'] + " %>% write_csv()"
@@ -102,9 +102,13 @@ Rprofile_config = open(os.path.join(xdg_config_home, "ripe", "Rprofile.ripe"), "
 Rprofile = tempfile.NamedTemporaryFile(mode="w", delete=False)
 Rprofile.write(
 """\
-suppressPackageStartupMessages(library(readr))
+suppressPackageStartupMessages(library(vroom))
 tmpfn <- Sys.getenv("ripe_tmpfn")
-i <- read_delim(tmpfn, show_col_types=FALSE)
+i <-
+tryCatch(
+      vroom(tmpfn, show_col_types=FALSE)
+    , error=function(e) jsonlite::fromJSON(tmpfn)
+)
 # l <- tidyr::tibble(lines=readLines(tmpfn))
 write_csv <- function(...) readr::write_csv(file=tmpfn, ...) & q()
 write_tsv <- function(...) readr::write_tsv(file=tmpfn, ...) & q()
